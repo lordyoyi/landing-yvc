@@ -4,84 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Young Ventures | Capital con Contexto</title>
-    <meta name="description" content="Operadores que invierten, no inversores que opinan. Capital con contexto para B2B Software en LatAm.">
     
-    <!-- Favicon (Placeholder - Puedes cambiarlo por tu favicon.ico) -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 
-    <!-- Custom Styles for Animations -->
-    <style>
-        /* Base styles */
-        body {
-            margin: 0;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Marquee Animation */
-        @keyframes scroll { 
-            0% { transform: translateX(0); } 
-            100% { transform: translateX(-50%); } 
-        }
-        .animate-scroll { animation: scroll linear infinite; }
-        
-        /* Spin Slow Animation */
-        .animate-spin-slow {
-            animation: spin 8s linear infinite;
-        }
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #F2F0E9; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #000000; 
-            border: 3px solid #F2F0E9;
-            border-radius: 6px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #FF6A00; 
-        }
-    </style>
-
-    <!-- React & Babel Setup for In-Browser JSX -->
-    <script type="importmap">
-        {
-            "imports": {
-                "react": "https://esm.sh/react@18.2.0",
-                "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-                "lucide-react": "https://esm.sh/lucide-react@0.263.1"
-            }
-        }
-    </script>
+    <!-- React & ReactDOM (UMD - Global Variables) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel Standalone -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body { margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
+        .animate-scroll { animation: scroll 35s linear infinite; }
+        .animate-spin-slow { animation: spin 8s linear infinite; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #F2F0E9; }
+        ::-webkit-scrollbar-thumb { background: #000000; border: 3px solid #F2F0E9; border-radius: 6px; }
+        ::-webkit-scrollbar-thumb:hover { background: #FF6A00; }
+    </style>
 </head>
 <body>
     <div id="root"></div>
 
-    <script type="text/babel" data-type="module">
-        import React, { useState, useEffect } from 'react';
-        import { createRoot } from 'react-dom/client';
-        import { 
-            ArrowUpRight, Star, Zap, Target, Users, Clock, 
-            Focus, Sparkles, Check, X, Linkedin, Menu, ChevronDown 
-        } from 'lucide-react';
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- ICONS (Inlined for reliability) ---
+        const Icon = ({ children, size = 24, className = "", ...props }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} {...props}>{children}</svg>
+        );
+        const ArrowUpRight = (p) => <Icon {...p}><path d="M7 7h10v10"/><path d="M7 17 17 7"/></Icon>;
+        const Star = (p) => <Icon {...p}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></Icon>;
+        const Zap = (p) => <Icon {...p}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></Icon>;
+        const Target = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></Icon>;
+        const Users = (p) => <Icon {...p}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></Icon>;
+        const Clock = (p) => <Icon {...p}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></Icon>;
+        const Focus = (p) => <Icon {...p}><circle cx="12" cy="12" r="3"/><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></Icon>;
+        const Sparkles = (p) => <Icon {...p}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M9 5H5"/><path d="M19 15v4"/><path d="M23 17h-4"/></Icon>;
+        const Check = (p) => <Icon {...p}><path d="M20 6 9 17l-5-5"/></Icon>;
+        const X = (p) => <Icon {...p}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></Icon>;
+        const Linkedin = (p) => <Icon {...p}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></Icon>;
+        const Menu = (p) => <Icon {...p}><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></Icon>;
+        const ChevronDown = (p) => <Icon {...p}><path d="m6 9 6 6 6-6"/></Icon>;
 
         // --- DESIGN TOKENS ---
         const colors = {
@@ -93,71 +64,28 @@
             gray: '#E5E5E5'
         };
 
-        // --- TYPOGRAPHY COMPONENTS ---
+        // --- COMPONENTS ---
         const SerifFont = ({ children, className = "" }) => (
-            <span className={`italic ${className}`} style={{ fontFamily: '"Times New Roman", Times, serif' }}>
-                {children}
-            </span>
+            <span className={`italic ${className}`} style={{ fontFamily: '"Times New Roman", Times, serif' }}>{children}</span>
         );
-
         const MonoFont = ({ children, className = "" }) => (
-            <span className={`${className}`} style={{ fontFamily: '"Courier New", Courier, monospace' }}>
-                {children}
-            </span>
+            <span className={`${className}`} style={{ fontFamily: '"Courier New", Courier, monospace' }}>{children}</span>
+        );
+        
+        const YVLogo = () => (
+            <div className="flex items-center gap-3 select-none group cursor-pointer">
+                <span className="font-black text-xl md:text-2xl tracking-tight uppercase" style={{ fontFamily: 'Space Grotesk, sans-serif', color: colors.black }}>Young Ventures</span>
+            </div>
         );
 
-        // --- UI COMPONENTS ---
-
-        const YVLogo = ({ variant = "default" }) => {
-            return (
-                <div className="flex items-center gap-3 select-none group cursor-pointer">
-                    {/* Brand Name */}
-                    <span 
-                        className="font-black text-xl md:text-2xl tracking-tight uppercase"
-                        style={{ 
-                            fontFamily: 'Space Grotesk, sans-serif',
-                            color: colors.black
-                        }}
-                    >
-                        Young Ventures
-                    </span>
-                </div>
-            );
-        };
-
-        const BrutalButton = ({ children, primary = true, onClick, className = "", type = "button", disabled = false }) => (
-            <button 
-                onClick={onClick}
-                type={type}
-                disabled={disabled}
-                className={`
-                    relative px-6 md:px-8 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wide 
-                    transition-all duration-150 border-2 select-none
-                    ${disabled ? 'opacity-50 cursor-not-allowed' : 'active:translate-y-1 active:translate-x-1 hover:-translate-y-[2px] hover:-translate-x-[2px]'}
-                    ${className}
-                `}
-                style={{
-                    backgroundColor: primary ? colors.orange : colors.white,
-                    color: primary ? colors.white : colors.black,
-                    borderColor: colors.black,
-                    boxShadow: disabled ? 'none' : `4px 4px 0px 0px ${colors.black}`,
-                }}
-            >
-                {disabled ? 'Procesando...' : children}
+        const BrutalButton = ({ children, primary = true, onClick, className = "", disabled = false }) => (
+            <button onClick={onClick} disabled={disabled} className={`relative px-6 md:px-8 py-3 md:py-4 font-bold text-sm md:text-base uppercase tracking-wide transition-all duration-150 border-2 select-none ${disabled ? 'opacity-50 cursor-not-allowed' : 'active:translate-y-1 active:translate-x-1 hover:-translate-y-[2px] hover:-translate-x-[2px]'} ${className}`} style={{ backgroundColor: primary ? colors.orange : colors.white, color: primary ? colors.white : colors.black, borderColor: colors.black, boxShadow: disabled ? 'none' : `4px 4px 0px 0px ${colors.black}` }}>
+                {children}
             </button>
         );
 
         const StickyNote = ({ children, rotation = "rotate-2", bgColor = colors.white, textColor = colors.black, className = "" }) => (
-            <div 
-                className={`border-2 p-6 transition-transform duration-300 hover:z-50 hover:scale-105 ${className}`}
-                style={{
-                    backgroundColor: bgColor,
-                    color: textColor,
-                    borderColor: colors.black,
-                    boxShadow: `4px 4px 0px 0px ${colors.black}`,
-                    transform: `var(--tw-rotate, ${rotation})` 
-                }}
-            >
+            <div className={`border-2 p-6 transition-transform duration-300 hover:z-50 hover:scale-105 ${className}`} style={{ backgroundColor: bgColor, color: textColor, borderColor: colors.black, boxShadow: `4px 4px 0px 0px ${colors.black}`, transform: `var(--tw-rotate, ${rotation})` }}>
                 <div className="w-2 h-2 bg-black rounded-full mx-auto mb-3 opacity-30"></div>
                 {children}
             </div>
@@ -165,101 +93,49 @@
 
         const DataBlock = ({ number, label }) => (
             <div className="flex flex-col">
-                <span className="text-3xl md:text-4xl font-black tracking-tighter" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                    {number}
-                </span>
+                <span className="text-3xl md:text-4xl font-black tracking-tighter" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{number}</span>
                 <MonoFont className="text-xs uppercase tracking-wider opacity-70">{label}</MonoFont>
             </div>
         );
 
         const SectionLabel = ({ children }) => (
-            <MonoFont className="text-xs md:text-sm uppercase tracking-widest opacity-60 mb-6 md:mb-8 block">
-                // {children}
-            </MonoFont>
+            <MonoFont className="text-xs md:text-sm uppercase tracking-widest opacity-60 mb-6 md:mb-8 block">// {children}</MonoFont>
         );
 
         // --- SECTIONS ---
-
         const TopNavigation = () => (
             <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-40">
                 <YVLogo />
                 <div className="hidden md:flex gap-8">
-                {['Manifiesto', 'Tesis', 'Socios'].map((item) => (
-                    <a 
-                        key={item} 
-                        href={`#${item.toLowerCase()}`}
-                        className="font-bold text-sm uppercase hover:text-orange-600 transition-colors"
-                    >
-                        {item}
-                    </a>
-                ))}
+                    {['Manifiesto', 'Tesis', 'Socios'].map((item) => (
+                        <a key={item} href={`#${item.toLowerCase()}`} className="font-bold text-sm uppercase hover:text-orange-600 transition-colors">{item}</a>
+                    ))}
                 </div>
-                <div className="md:hidden">
-                    <Menu className="w-8 h-8" />
-                </div>
+                <div className="md:hidden"><Menu className="w-8 h-8" /></div>
             </div>
         );
 
         const Hero = () => (
-            <section 
-                className="min-h-screen flex flex-col justify-center px-6 pt-24 pb-12 relative overflow-hidden"
-                style={{ backgroundColor: colors.bone }}
-            >
-                {/* Background Shapes */}
-                <div 
-                    className="absolute top-20 right-[-15%] w-[45vw] h-[45vw] rounded-full blur-[100px] opacity-30 pointer-events-none animate-pulse"
-                    style={{ backgroundColor: colors.orange }}
-                />
-                <div 
-                    className="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full blur-[120px] opacity-20 pointer-events-none"
-                    style={{ backgroundColor: colors.blue }}
-                />
-
+            <section className="min-h-screen flex flex-col justify-center px-6 pt-24 pb-12 relative overflow-hidden" style={{ backgroundColor: colors.bone }}>
+                <div className="absolute top-20 right-[-15%] w-[45vw] h-[45vw] rounded-full blur-[100px] opacity-30 pointer-events-none animate-pulse" style={{ backgroundColor: colors.orange }} />
+                <div className="absolute bottom-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full blur-[120px] opacity-20 pointer-events-none" style={{ backgroundColor: colors.blue }} />
                 <div className="max-w-[90rem] mx-auto w-full z-10">
-                    {/* Top Meta Info */}
                     <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12 md:mb-16">
-                        <div 
-                            className="inline-block px-4 py-2 transform -rotate-1 border-2 border-black"
-                            style={{ backgroundColor: colors.black, color: colors.white }}
-                        >
+                        <div className="inline-block px-4 py-2 transform -rotate-1 border-2 border-black" style={{ backgroundColor: colors.black, color: colors.white }}>
                             <MonoFont className="text-xs md:text-sm">EST. 2025 // SANTIAGO, CHILE</MonoFont>
                         </div>
                         <div className="flex items-center gap-3 bg-white px-3 py-1 border border-black rounded-full mt-4 md:mt-0">
-                            <div 
-                                className="w-2 h-2 md:w-3 md:h-3 rounded-full animate-pulse"
-                                style={{ backgroundColor: colors.orange }}
-                            />
+                            <div className="w-2 h-2 md:w-3 md:h-3 rounded-full animate-pulse" style={{ backgroundColor: colors.orange }} />
                             <MonoFont className="text-xs md:text-sm uppercase tracking-widest font-bold">Open Call a Startups</MonoFont>
                         </div>
                     </div>
-
-                    {/* Main Headline */}
-                    <h1 
-                        className="text-[13vw] md:text-[11vw] leading-[0.85] font-black tracking-tighter select-none mb-8 md:mb-0"
-                        style={{ color: colors.black, fontFamily: 'Space Grotesk, sans-serif' }}
-                    >
-                        CAPITAL <br />
-                        <span className="flex items-center gap-2 md:gap-4 flex-wrap">
-                            <SerifFont className="text-[13vw] md:text-[11vw]" style={{ color: colors.orange }}>con</SerifFont> 
-                            <span className="relative inline-block">
-                                CONTEXTO
-                                <svg className="absolute -bottom-2 md:-bottom-4 left-0 w-full" height="12" viewBox="0 0 300 12">
-                                    <path d="M0,6 Q150,12 300,6" fill="none" stroke={colors.blue} strokeWidth="4" />
-                                </svg>
-                            </span>
-                        </span>
+                    <h1 className="text-[13vw] md:text-[11vw] leading-[0.85] font-black tracking-tighter select-none mb-8 md:mb-0" style={{ color: colors.black, fontFamily: 'Space Grotesk, sans-serif' }}>
+                        CAPITAL <br /><span className="flex items-center gap-2 md:gap-4 flex-wrap"><SerifFont className="text-[13vw] md:text-[11vw]" style={{ color: colors.orange }}>con</SerifFont><span className="relative inline-block">CONTEXTO<svg className="absolute -bottom-2 md:-bottom-4 left-0 w-full" height="12" viewBox="0 0 300 12"><path d="M0,6 Q150,12 300,6" fill="none" stroke={colors.blue} strokeWidth="4" /></svg></span></span>
                     </h1>
-
-                    {/* Subtitle + CTA */}
                     <div className="mt-8 md:mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-end">
                         <div className="lg:col-span-7">
-                            <p 
-                                className="text-xl md:text-3xl font-medium leading-tight pl-6 md:pl-8 max-w-2xl cursor-default"
-                                style={{ borderLeft: `6px solid ${colors.blue}` }}
-                                title="Más que capital, un compromiso con tu proyecto"
-                            >
-                                Operadores que invierten, <br/>
-                                <SerifFont className="text-gray-500">no inversores que opinan.</SerifFont>
+                            <p className="text-xl md:text-3xl font-medium leading-tight pl-6 md:pl-8 max-w-2xl cursor-default" style={{ borderLeft: `6px solid ${colors.blue}` }} title="Más que capital, un compromiso con tu proyecto">
+                                Operadores que invierten, <br/><SerifFont className="text-gray-500">no inversores que opinan.</SerifFont>
                             </p>
                         </div>
                         <div className="lg:col-span-5 flex flex-wrap gap-4 justify-start lg:justify-end">
@@ -269,113 +145,42 @@
                         </div>
                     </div>
                 </div>
-                
-                {/* Scroll Indicator */}
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce hidden md:block opacity-50">
-                    <ChevronDown />
-                </div>
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce hidden md:block opacity-50"><ChevronDown /></div>
             </section>
         );
 
-        const Marquee = ({ items, speed = "25s" }) => {
-            return (
-                <div 
-                    className="flex overflow-hidden border-y-2 py-3 md:py-4 bg-orange-500"
-                    style={{ borderColor: colors.black, backgroundColor: colors.orange }}
-                >
-                    <div 
-                        className="flex whitespace-nowrap animate-scroll"
-                        style={{ animationDuration: speed }}
-                    >
-                        {[...Array(6)].map((_, i) => (
-                            <div key={i} className="flex items-center">
-                                {items.map((text, j) => (
-                                    <span 
-                                        key={`${i}-${j}`} 
-                                        className="mx-4 md:mx-8 text-sm md:text-lg font-bold uppercase flex items-center gap-3 text-white"
-                                    >
-                                        {text} <Star size={14} fill="white" />
-                                    </span>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
+        const Marquee = ({ items }) => (
+            <div className="flex overflow-hidden border-y-2 py-3 md:py-4 bg-orange-500" style={{ borderColor: colors.black, backgroundColor: colors.orange }}>
+                <div className="flex whitespace-nowrap animate-scroll">
+                    {[...Array(6)].map((_, i) => (
+                        <div key={i} className="flex items-center">
+                            {items.map((text, j) => (
+                                <span key={`${i}-${j}`} className="mx-4 md:mx-8 text-sm md:text-lg font-bold uppercase flex items-center gap-3 text-white">
+                                    {text} <Star size={14} fill="white" />
+                                </span>
+                            ))}
+                        </div>
+                    ))}
                 </div>
-            );
-        };
+            </div>
+        );
 
         const ManifiestoSection = () => (
             <section id="manifiesto" className="py-20 md:py-32 px-6 overflow-hidden" style={{ backgroundColor: colors.bone }}>
                 <div className="max-w-[90rem] mx-auto">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-                        {/* Left Column */}
                         <div>
                             <SectionLabel>Quiénes Somos</SectionLabel>
-                            
-                            <h2 
-                                className="text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-[0.9] mb-8"
-                                style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                            >
-                                El Ecosistema <br/>
-                                <span 
-                                    className="inline-block px-3 mt-2 transform -rotate-1"
-                                    style={{ backgroundColor: colors.orange, color: colors.white }}
-                                >
-                                    Madurando.
-                                </span>
-                            </h2>
-                            
-                            <p className="text-lg md:text-xl leading-relaxed opacity-80 mb-12 max-w-lg">
-                                En 2025, <strong>11 profesionales</strong> decidimos dejar de aconsejar desde afuera. 
-                                Ahora invertimos <SerifFont>nuestro propio dinero</SerifFont> en las startups que 
-                                nosotros mismos querríamos construir.
-                            </p>
-                            
-                            {/* Data Points */}
+                            <h2 className="text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-[0.9] mb-8" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>El Ecosistema <br/><span className="inline-block px-3 mt-2 transform -rotate-1" style={{ backgroundColor: colors.orange, color: colors.white }}>Madurando.</span></h2>
+                            <p className="text-lg md:text-xl leading-relaxed opacity-80 mb-12 max-w-lg">En 2025, <strong>11 profesionales</strong> decidimos dejar de aconsejar desde afuera. Ahora invertimos <SerifFont>nuestro propio dinero</SerifFont> en las startups que nosotros mismos querríamos construir.</p>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-y-8 gap-x-4 border-t-2 border-black/10 pt-8">
-                                <DataBlock number="11" label="Socios Activos" />
-                                <DataBlock number="10" label="Startups Meta" />
-                                <DataBlock number="~$15K" label="Ticket USD" />
+                                <DataBlock number="11" label="Socios Activos" /><DataBlock number="10" label="Startups Meta" /><DataBlock number="~$15K" label="Ticket USD" />
                             </div>
                         </div>
-                        
-                        {/* Right Column - Sticky Notes - Responsive Fix */}
                         <div className="relative w-full flex flex-col gap-8 md:block md:h-[600px] mt-12 md:mt-0">
-                            
-                            <div className="md:absolute md:top-10 md:left-0 md:z-10 md:transform md:-rotate-6 w-full md:w-auto">
-                                <StickyNote className="md:rotate-[-6deg] hover:z-50" bgColor={colors.white}>
-                                    <div className="w-full md:w-64">
-                                        <h4 className="font-bold uppercase mb-2 border-b-2 border-black pb-1 text-sm">Creencia #1</h4>
-                                        <MonoFont className="text-sm leading-relaxed">
-                                            "No invertimos solo dinero: invertimos criterio y experiencia."
-                                        </MonoFont>
-                                    </div>
-                                </StickyNote>
-                            </div>
-
-                            <div className="md:absolute md:bottom-20 md:right-0 md:z-20 md:transform md:rotate-3 w-full md:w-auto">
-                                <StickyNote className="md:rotate-3 hover:z-50" bgColor={colors.orange} textColor={colors.white}>
-                                    <div className="w-full md:w-64">
-                                        <h4 className="font-bold uppercase mb-2 border-b-2 border-white pb-1 text-sm">Creencia #2</h4>
-                                        <MonoFont className="text-sm leading-relaxed">
-                                            "No prometemos unicornios. Prometemos rigor en el proceso."
-                                        </MonoFont>
-                                    </div>
-                                </StickyNote>
-                            </div>
-
-                            <div className="md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:z-30 w-full md:w-auto">
-                                <StickyNote className="md:-rotate-3 hover:z-50" bgColor={colors.blue} textColor={colors.white}>
-                                    <div className="w-full md:w-56">
-                                        <h4 className="font-bold uppercase mb-2 border-b-2 border-white pb-1 text-sm">Foco</h4>
-                                        <MonoFont className="text-sm leading-relaxed">
-                                            B2B Software<br/>
-                                            LATAM<br/>
-                                            Pre-Seed & Seed
-                                        </MonoFont>
-                                    </div>
-                                </StickyNote>
-                            </div>
+                            <div className="md:absolute md:top-10 md:left-0 md:z-10 md:transform md:-rotate-6 w-full md:w-auto"><StickyNote className="md:rotate-[-6deg] hover:z-50" bgColor={colors.white}><div className="w-full md:w-64"><h4 className="font-bold uppercase mb-2 border-b-2 border-black pb-1 text-sm">Creencia #1</h4><MonoFont className="text-sm leading-relaxed">"No invertimos solo dinero: invertimos criterio y experiencia."</MonoFont></div></StickyNote></div>
+                            <div className="md:absolute md:bottom-20 md:right-0 md:z-20 md:transform md:rotate-3 w-full md:w-auto"><StickyNote className="md:rotate-3 hover:z-50" bgColor={colors.orange} textColor={colors.white}><div className="w-full md:w-64"><h4 className="font-bold uppercase mb-2 border-b-2 border-white pb-1 text-sm">Creencia #2</h4><MonoFont className="text-sm leading-relaxed">"No prometemos unicornios. Prometemos rigor en el proceso."</MonoFont></div></StickyNote></div>
+                            <div className="md:absolute md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:z-30 w-full md:w-auto"><StickyNote className="md:-rotate-3 hover:z-50" bgColor={colors.blue} textColor={colors.white}><div className="w-full md:w-56"><h4 className="font-bold uppercase mb-2 border-b-2 border-white pb-1 text-sm">Foco</h4><MonoFont className="text-sm leading-relaxed">B2B Software<br/>LATAM<br/>Pre-Seed & Seed</MonoFont></div></StickyNote></div>
                         </div>
                     </div>
                 </div>
@@ -384,114 +189,36 @@
 
         const TesisSection = () => {
             const cards = [
-                {
-                    index: "01",
-                    title: "Tracción Real",
-                    description: "Buscamos startups con MVP funcional y señales de demanda: LOIs/MOUs firmados, pilotos activos, primeros contratos. Si tu ciclo de venta es largo, lo entendemos—hemos vivido ciclos de 6+ meses.",
-                    icon: Target,
-                    bgColor: colors.white,
-                },
-                {
-                    index: "02",
-                    title: "Software B2B",
-                    description: "Nos apasiona el software que resuelve problemas reales de empresas. SaaS, plataformas verticales, soluciones enterprise. Sin hardware, solo software que escala.",
-                    icon: Zap,
-                    bgColor: '#E8F4FD',
-                },
-                {
-                    index: "03",
-                    title: "Ambición Regional",
-                    description: "Buscamos invertir principalmente en Chile, ¡pero las grandes ideas no tienen fronteras! Si crees que somos un buen fit y estas en LATAM, felices de conocer tu proyecto",
-                    icon: Sparkles,
-                    bgColor: '#FFF0E6',
-                },
-                {
-                    index: "04",
-                    title: "Equipo",
-                    description: "Las ideas cambian, los equipos quedan. Buscamos founders que entiendan problemas, y estén dispuestos a trabajar en conjunto.",
-                    icon: Users,
-                    bgColor: '#F3F4F6',
-                },
+                { i: "01", t: "Tracción Real", d: "Buscamos startups con MVP funcional y señales de demanda: LOIs/MOUs firmados, pilotos activos, primeros contratos. Si tu ciclo de venta es largo, lo entendemos—hemos vivido ciclos de 6+ meses.", ic: Target, bg: colors.white },
+                { i: "02", t: "Software B2B", d: "Nos apasiona el software que resuelve problemas reales de empresas. SaaS, plataformas verticales, soluciones enterprise. Sin hardware, solo software que escala.", ic: Zap, bg: '#E8F4FD' },
+                { i: "03", t: "Ambición Regional", d: "Buscamos invertir principalmente en Chile, ¡pero las grandes ideas no tienen fronteras! Si crees que somos un buen fit y estas en LATAM, felices de conocer tu proyecto", ic: Sparkles, bg: '#FFF0E6' },
+                { i: "04", t: "Equipo", d: "Las ideas cambian, los equipos quedan. Buscamos founders que entiendan problemas, y estén dispuestos a trabajar en conjunto.", ic: Users, bg: '#F3F4F6' },
             ];
-
-            const excitements = [
-                "Un founder técnico que también vende",
-                "Tracción con muy poco capital levantado",
-                "Problemas que el founder vivió en carne propia",
-                "Software que compite con planillas de Excel",
-            ];
+            const excitements = ["Un founder técnico que también vende", "Tracción con muy poco capital levantado", "Problemas que el founder vivió en carne propia", "Software que compite con planillas de Excel"];
 
             return (
                 <section id="tesis" className="py-20 md:py-32 px-6" style={{ backgroundColor: colors.bone }}>
                     <div className="max-w-[90rem] mx-auto">
                         <SectionLabel>Qué Buscamos</SectionLabel>
-                        
-                        {/* Thesis Cards */}
                         <div className="space-y-8">
                             {cards.map((card, i) => (
-                                <div 
-                                    key={i}
-                                    className="border-2 p-6 md:p-12 transition-all duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none"
-                                    style={{ 
-                                        backgroundColor: card.bgColor,
-                                        borderColor: colors.black,
-                                        boxShadow: `8px 8px 0px 0px ${colors.black}`,
-                                    }}
-                                >
+                                <div key={i} className="border-2 p-6 md:p-12 transition-all duration-300 hover:translate-x-1 hover:translate-y-1 hover:shadow-none" style={{ backgroundColor: card.bg, borderColor: colors.black, boxShadow: `8px 8px 0px 0px ${colors.black}` }}>
                                     <div className="flex flex-col md:flex-row justify-between items-start gap-6 mb-8">
                                         <div className="flex items-center gap-4">
-                                            <MonoFont className="text-4xl md:text-5xl font-bold opacity-20 hidden md:block">{card.index}</MonoFont>
-                                            <h3 
-                                                className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-none"
-                                                style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                                            >
-                                                {card.title}
-                                            </h3>
+                                            <MonoFont className="text-4xl md:text-5xl font-bold opacity-20 hidden md:block">{card.i}</MonoFont>
+                                            <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tight leading-none" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{card.t}</h3>
                                         </div>
-                                        <div 
-                                            className="p-3 border-2 rounded-full rotate-12 group-hover:rotate-180 transition-transform duration-700"
-                                            style={{ borderColor: colors.black, backgroundColor: colors.white }}
-                                        >
-                                            <card.icon size={28} />
-                                        </div>
+                                        <div className="p-3 border-2 rounded-full rotate-12 group-hover:rotate-180 transition-transform duration-700" style={{ borderColor: colors.black, backgroundColor: colors.white }}><card.ic size={28} /></div>
                                     </div>
-                                    <p 
-                                        className="text-lg md:text-2xl max-w-4xl leading-relaxed pl-4 md:pl-8"
-                                        style={{ borderLeft: `3px solid ${colors.black}`, fontFamily: '"Times New Roman", serif' }}
-                                    >
-                                        {card.description}
-                                    </p>
+                                    <p className="text-lg md:text-2xl max-w-4xl leading-relaxed pl-4 md:pl-8" style={{ borderLeft: `3px solid ${colors.black}`, fontFamily: '"Times New Roman", serif' }}>{card.d}</p>
                                 </div>
                             ))}
                         </div>
-
-                        {/* Excitement Block */}
-                        <div 
-                            className="mt-16 p-8 md:p-12 border-2 relative overflow-hidden"
-                            style={{ 
-                                backgroundColor: colors.blue, 
-                                borderColor: colors.black,
-                                boxShadow: `6px 6px 0px 0px ${colors.black}`,
-                            }}
-                        >
-                            {/* Texture overlay */}
+                        <div className="mt-16 p-8 md:p-12 border-2 relative overflow-hidden" style={{ backgroundColor: colors.blue, borderColor: colors.black, boxShadow: `6px 6px 0px 0px ${colors.black}` }}>
                             <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
-
-                            <h4 
-                                className="text-2xl md:text-3xl font-bold mb-8 flex items-center gap-3 relative z-10"
-                                style={{ color: colors.white, fontFamily: 'Space Grotesk, sans-serif' }}
-                            >
-                                <Sparkles size={28} className="animate-spin-slow" /> Nos emocionamos cuando vemos...
-                            </h4>
+                            <h4 className="text-2xl md:text-3xl font-bold mb-8 flex items-center gap-3 relative z-10" style={{ color: colors.white, fontFamily: 'Space Grotesk, sans-serif' }}><Sparkles size={28} className="animate-spin-slow" /> Nos emocionamos cuando vemos...</h4>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
-                                {excitements.map((item, i) => (
-                                    <div key={i} className="flex items-start gap-3" style={{ color: colors.white }}>
-                                        <div className="mt-1 flex-shrink-0">
-                                            <Check size={20} className="text-orange-400" strokeWidth={3} />
-                                        </div>
-                                        <span className="text-lg md:text-xl font-medium">{item}</span>
-                                    </div>
-                                ))}
+                                {excitements.map((t, i) => (<div key={i} className="flex items-start gap-3" style={{ color: colors.white }}><div className="mt-1 flex-shrink-0"><Check size={20} className="text-orange-400" strokeWidth={3} /></div><span className="text-lg md:text-xl font-medium">{t}</span></div>))}
                             </div>
                         </div>
                     </div>
@@ -501,75 +228,23 @@
 
         const DiferenciadoresSection = () => {
             const diffs = [
-                {
-                    icon: Users,
-                    title: "Hands-on, sin humo",
-                    description: "Hemos cerrado contratos enterprise, escalado equipos y vivido el dolor del ciclo de venta B2B. No teorizamos, sino que reforzamos tu operación y apoyamos tu desarrollo comercial trabajando codo a codo contigo.",
-                    proof: "Expertise colectivo: fintech, HR tech, logistics, marketplaces.",
-                },
-                {
-                    icon: Clock,
-                    title: "Tiempo, no solo capital",
-                    description: "11 jugadores entran a tu cancha. No miramos desde la grada: ejecutamos contigo para cerrar brechas, conectar clientes y escalar tus ingresos.",
-                    proof: "No somos un cheque que desaparece.",
-                },
-                {
-                    icon: Zap,
-                    title: "Inteligencia colectiva",
-                    description: "11 profesionales con expertise complementario evaluando cada oportunidad. Cada startup pasa por múltiples lentes antes de invertir.",
-                    proof: "Un comité, no un individuo.",
-                },
-                {
-                    icon: Focus,
-                    title: "Foco quirúrgico",
-                    description: "B2B software en etapa temprana. Chile, Argentina, Perú. Eso hacemos. Eso sabemos.",
-                    proof: "Decimos que no a todo lo demás.",
-                },
+                { ic: Users, t: "Hands-on, sin humo", d: "Hemos cerrado contratos enterprise, escalado equipos y vivido el dolor del ciclo de venta B2B. No teorizamos, sino que reforzamos tu operación y apoyamos tu desarrollo comercial trabajando codo a codo contigo.", p: "Expertise colectivo: fintech, HR tech, logistics, marketplaces." },
+                { ic: Clock, t: "Tiempo, no solo capital", d: "11 jugadores entran a tu cancha. No miramos desde la grada: ejecutamos contigo para cerrar brechas, conectar clientes y escalar tus ingresos.", p: "No somos un cheque que desaparece." },
+                { ic: Zap, t: "Inteligencia colectiva", d: "11 profesionales con expertise complementario evaluando cada oportunidad. Cada startup pasa por múltiples lentes antes de invertir.", p: "Un comité, no un individuo." },
+                { ic: Focus, t: "Foco quirúrgico", d: "B2B software en etapa temprana. Chile, Argentina, Perú. Eso hacemos. Eso sabemos.", p: "Decimos que no a todo lo demás." }
             ];
-
             return (
                 <section className="py-20 md:py-32 px-6 bg-white border-y-2 border-black">
                     <div className="max-w-[90rem] mx-auto">
                         <SectionLabel>Por Qué Nosotros</SectionLabel>
-                        
-                        <h2 
-                            className="text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[0.95] mb-16 text-center md:text-left"
-                            style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                        >
-                            Diferenciadores
-                        </h2>
-
+                        <h2 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase leading-[0.95] mb-16 text-center md:text-left" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>Diferenciadores</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {diffs.map((diff, i) => (
-                                <div 
-                                    key={i}
-                                    className="border-2 p-8 md:p-10 group hover:-translate-y-2 transition-transform duration-200"
-                                    style={{ 
-                                        backgroundColor: colors.bone,
-                                        borderColor: colors.black,
-                                        boxShadow: `6px 6px 0px 0px ${colors.black}`,
-                                    }}
-                                >
-                                    <div 
-                                        className="w-14 h-14 border-2 flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                                        style={{ borderColor: colors.black, backgroundColor: colors.orange }}
-                                    >
-                                        <diff.icon size={28} color={colors.white} />
-                                    </div>
-                                    <h3 
-                                        className="text-2xl md:text-3xl font-bold uppercase mb-4"
-                                        style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                                    >
-                                        {diff.title}
-                                    </h3>
-                                    <p className="text-lg leading-relaxed mb-6 opacity-90">
-                                        {diff.description}
-                                    </p>
-                                    <div 
-                                        className="pt-4 border-t-2 border-black/10"
-                                    >
-                                        <SerifFont className="text-base text-blue-800 font-bold">{diff.proof}</SerifFont>
-                                    </div>
+                                <div key={i} className="border-2 p-8 md:p-10 group hover:-translate-y-2 transition-transform duration-200" style={{ backgroundColor: colors.bone, borderColor: colors.black, boxShadow: `6px 6px 0px 0px ${colors.black}` }}>
+                                    <div className="w-14 h-14 border-2 flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]" style={{ borderColor: colors.black, backgroundColor: colors.orange }}><diff.ic size={28} color={colors.white} /></div>
+                                    <h3 className="text-2xl md:text-3xl font-bold uppercase mb-4" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{diff.t}</h3>
+                                    <p className="text-lg leading-relaxed mb-6 opacity-90">{diff.d}</p>
+                                    <div className="pt-4 border-t-2 border-black/10"><SerifFont className="text-base text-blue-800 font-bold">{diff.p}</SerifFont></div>
                                 </div>
                             ))}
                         </div>
@@ -580,140 +255,43 @@
 
         const SquadSection = () => {
             const partners = [
-                { 
-                    name: "Sebastián", 
-                    apellido: "Reyes", 
-                    expertise: "Cloud Tech & Ecosystems", 
-                    linkedin: "https://www.linkedin.com/in/s-reyes-r/" 
-                },
-                { 
-                    name: "Claudia", 
-                    apellido: "Osorio", 
-                    expertise: "Finanzas & Gobierno Corporativo", 
-                    linkedin: "https://www.linkedin.com/in/claudia-osorio-559ab798/" 
-                },
-                { 
-                    name: "Ronnie", 
-                    apellido: "Muñoz", 
-                    expertise: "Growth Marketing & Martech", 
-                    linkedin: "https://www.linkedin.com/in/ronniemunozc/" 
-                },
-                { 
-                    name: "Fabián", 
-                    apellido: "Mella", 
-                    expertise: "Venture Tech & Analytics", 
-                    linkedin: "https://www.linkedin.com/in/fabian-mella-lukacs/" 
-                },
-                { 
-                    name: "Alejandra", 
-                    apellido: "Pérez", 
-                    expertise: "Estrategia Legal & Fundraising", 
-                    linkedin: "https://www.linkedin.com/in/alejandra-perez-faria/" 
-                },
-                { 
-                    name: "Rodrigo", 
-                    apellido: "Rojo", 
-                    expertise: "Growth, IA & Tecnología", 
-                    linkedin: "https://www.linkedin.com/in/rodrigorojo/" 
-                },
-                { 
-                    name: "Erwin", 
-                    apellido: "Tapia", 
-                    expertise: "Estrategia Corporativa & B2B", 
-                    linkedin: "https://www.linkedin.com/in/erwintapia/" 
-                },
-                { 
-                    name: "Andrés", 
-                    apellido: "Leiva", 
-                    expertise: "Estrategia de Negocios", 
-                    linkedin: "https://www.linkedin.com/in/andres-leiva-loyola/" 
-                },
-                { 
-                    name: "Diego", 
-                    apellido: "Pinto", 
-                    expertise: "Legal Partner Early Stage", 
-                    linkedin: "https://www.linkedin.com/in/diego-pinto-bravo-314551157/" 
-                },
-                { 
-                    name: "Renato", 
-                    apellido: "Cacciuttolo", 
-                    expertise: "Fundraising & Ecosistema", 
-                    linkedin: "https://www.linkedin.com/in/rcacciuttoloo/" 
-                },
-                { 
-                    name: "Chris", 
-                    apellido: "Thompson", 
-                    expertise: "VC, Innovación & Tecnología", 
-                    linkedin: "https://www.linkedin.com/in/christhompsona/" 
-                },
+                { n: "Sebastián", a: "Reyes", e: "Cloud Tech & Ecosystems", l: "https://www.linkedin.com/in/s-reyes-r/" },
+                { n: "Claudia", a: "Osorio", e: "Finanzas & Gobierno Corporativo", l: "https://www.linkedin.com/in/claudia-osorio-559ab798/" },
+                { n: "Ronnie", a: "Muñoz", e: "Growth Marketing & Martech", l: "https://www.linkedin.com/in/ronniemunozc/" },
+                { n: "Fabián", a: "Mella", e: "Venture Tech & Analytics", l: "https://www.linkedin.com/in/fabian-mella-lukacs/" },
+                { n: "Alejandra", a: "Pérez", e: "Estrategia Legal & Fundraising", l: "https://www.linkedin.com/in/alejandra-perez-faria/" },
+                { n: "Rodrigo", a: "Rojo", e: "Growth, IA & Tecnología", l: "https://www.linkedin.com/in/rodrigorojo/" },
+                { n: "Erwin", a: "Tapia", e: "Estrategia Corporativa & B2B", l: "https://www.linkedin.com/in/erwintapia/" },
+                { n: "Andrés", a: "Leiva", e: "Estrategia de Negocios", l: "https://www.linkedin.com/in/andres-leiva-loyola/" },
+                { n: "Diego", a: "Pinto", e: "Legal Partner Early Stage", l: "https://www.linkedin.com/in/diego-pinto-bravo-314551157/" },
+                { n: "Renato", a: "Cacciuttolo", e: "Fundraising & Ecosistema", l: "https://www.linkedin.com/in/rcacciuttoloo/" },
+                { n: "Chris", a: "Thompson", e: "VC, Innovación & Tecnología", l: "https://www.linkedin.com/in/christhompsona/" },
             ];
 
             return (
                 <section id="socios" className="py-20 md:py-32 px-6" style={{ backgroundColor: colors.black, color: colors.bone }}>
                     <div className="max-w-[90rem] mx-auto">
-                        {/* Header */}
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 pb-8 border-b" style={{ borderColor: `${colors.bone}30` }}>
-                            <div>
-                                <SectionLabel>El Squad</SectionLabel>
-                                <h2 
-                                    className="text-6xl md:text-[8vw] leading-none font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-500"
-                                    style={{ fontFamily: 'Space Grotesk, sans-serif', WebkitTextStroke: '1px transparent' }}
-                                >
-                                    LOS 11
-                                </h2>
-                            </div>
-                            <div className="text-right mt-6 md:mt-0">
-                                <div className="text-5xl font-bold text-orange-500">11</div>
-                                <MonoFont className="text-sm uppercase opacity-60">Socios Activos</MonoFont>
-                            </div>
+                            <div><SectionLabel>El Squad</SectionLabel><h2 className="text-6xl md:text-[8vw] leading-none font-black text-transparent bg-clip-text bg-gradient-to-br from-white to-gray-500" style={{ fontFamily: 'Space Grotesk, sans-serif', WebkitTextStroke: '1px transparent' }}>LOS 11</h2></div>
+                            <div className="text-right mt-6 md:mt-0"><div className="text-5xl font-bold text-orange-500">11</div><MonoFont className="text-sm uppercase opacity-60">Socios Activos</MonoFont></div>
                         </div>
-
-                        {/* Grid */}
-                        <div 
-                            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-neutral-800 border border-neutral-800"
-                        >
-                            {partners.map((partner, i) => (
-                                <div 
-                                    key={i} 
-                                    className="p-6 md:p-8 hover:bg-neutral-900 transition-colors group relative bg-black h-48 flex flex-col justify-between"
-                                >
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-neutral-800 border border-neutral-800">
+                            {partners.map((p, i) => (
+                                <div key={i} className="p-6 md:p-8 hover:bg-neutral-900 transition-colors group relative bg-black h-48 flex flex-col justify-between">
                                     <div className="flex justify-between items-start">
                                         <span className="text-xs font-mono text-neutral-500">0{i + 1}</span>
-                                        <a 
-                                            href={partner.linkedin} 
-                                            target="_blank" 
-                                            rel="noopener noreferrer"
-                                            className="transition-all duration-300 hover:scale-110"
-                                            title="Ver LinkedIn"
-                                        >
-                                            <Linkedin size={20} className="text-neutral-600 group-hover:text-[#0077b5] transition-colors duration-300" />
-                                        </a>
+                                        <a href={p.l} target="_blank" rel="noopener noreferrer" className="transition-all duration-300 hover:scale-110" title="Ver LinkedIn"><Linkedin size={20} className="text-neutral-600 group-hover:text-[#0077b5] transition-colors duration-300" /></a>
                                     </div>
-                                    
                                     <div>
-                                        <span 
-                                            className="text-xl font-bold uppercase tracking-tight block group-hover:text-orange-500 transition-colors"
-                                            style={{ color: colors.bone }}
-                                        >
-                                            {partner.name}
-                                        </span>
-                                        <SerifFont className="text-lg opacity-60 block">{partner.apellido}</SerifFont>
+                                        <span className="text-xl font-bold uppercase tracking-tight block group-hover:text-orange-500 transition-colors" style={{ color: colors.bone }}>{p.n}</span>
+                                        <SerifFont className="text-lg opacity-60 block">{p.a}</SerifFont>
                                         <div className="h-0.5 w-0 group-hover:w-full bg-orange-500 transition-all duration-300 mt-2"></div>
-                                        <MonoFont 
-                                            className="text-xs uppercase mt-3 block tracking-widest text-neutral-600 group-hover:text-orange-500 transition-colors duration-300"
-                                        >
-                                            {partner.expertise}
-                                        </MonoFont>
+                                        <MonoFont className="text-xs uppercase mt-3 block tracking-widest text-neutral-600 group-hover:text-orange-500 transition-colors duration-300">{p.e}</MonoFont>
                                     </div>
                                 </div>
                             ))}
-                            {/* Empty cell for grid alignment with message */}
-                            <div 
-                                className="p-6 md:p-8 flex items-center justify-center bg-black border-t border-neutral-800 lg:border-t-0"
-                            >
-                                <SerifFont className="text-sm opacity-40 text-center max-w-[200px]">
-                                    No hay socios senior ni junior. <br/>Cada voz pesa igual.
-                                </SerifFont>
+                            <div className="p-6 md:p-8 flex items-center justify-center bg-black border-t border-neutral-800 lg:border-t-0">
+                                <SerifFont className="text-sm opacity-40 text-center max-w-[200px]">No hay socios senior ni junior. <br/>Cada voz pesa igual.</SerifFont>
                             </div>
                         </div>
                     </div>
@@ -733,59 +311,30 @@
                 <section id="aplica" className="py-20 md:py-32 px-6" style={{ backgroundColor: colors.bone }}>
                     <div className="max-w-4xl mx-auto">
                         <SectionLabel>Tu Turno</SectionLabel>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase text-center mb-6 leading-tight" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>¿Construyes software B2B <br/><span className="bg-orange-500 text-white px-2">en LatAm?</span></h2>
+                        <p className="text-center text-xl opacity-70 mb-12"><SerifFont>Queremos conocer tu startup.</SerifFont></p>
                         
-                        <h2 
-                            className="text-4xl md:text-5xl lg:text-6xl font-black uppercase text-center mb-6 leading-tight"
-                            style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-                        >
-                            ¿Construyes software B2B <br/>
-                            <span className="bg-orange-500 text-white px-2">en LatAm?</span>
-                        </h2>
-                        
-                        <p className="text-center text-xl opacity-70 mb-12">
-                            <SerifFont>Queremos conocer tu startup.</SerifFont>
-                        </p>
-
-                        {/* Tally Embed Container */}
-                        <div 
-                            className="border-2 relative overflow-hidden bg-white p-4 md:p-10"
-                            style={{ 
-                                borderColor: colors.black,
-                                boxShadow: `8px 8px 0px 0px ${colors.black}`,
-                            }}
-                        >
+                        {/* Form Container */}
+                        <div className="border-2 relative overflow-hidden bg-white p-4 md:p-10" style={{ borderColor: colors.black, boxShadow: `8px 8px 0px 0px ${colors.black}` }}>
+                            <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center z-0" style={{ backgroundColor: '#f8f9fa' }}>
+                                <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+                                <h3 className="font-bold text-xl mb-2">Cargando formulario...</h3>
+                            </div>
                             <iframe 
-                                src="https://tally.so/embed/68ZkMB?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+                                src="https://forms.monday.com/forms/embed/97f28fb8ebd4c5e73f22501af4c0cdc0?r=use1" 
                                 width="100%" 
-                                height="600" 
-                                frameBorder="0" 
-                                marginHeight="0" 
-                                marginWidth="0" 
-                                title="Aplica a Young Ventures"
-                                className="w-full min-h-[700px] md:min-h-[500px]"
+                                height="100%" 
+                                style={{ border: 0, position: 'relative', zIndex: 10 }} 
+                                title="Formulario de Aplicación Young Ventures"
+                                className="w-full min-h-[1600px] md:min-h-[1100px]"
                             ></iframe>
                         </div>
 
                         {/* No Fit Section */}
-                        <div 
-                            className="mt-12 p-8 border-2 border-dashed bg-white/50"
-                            style={{ borderColor: `${colors.black}40` }}
-                        >
-                            <h4 className="font-bold mb-6 flex items-center gap-2 text-lg">
-                                <X size={24} className="text-red-500" />
-                                ¿Cuándo NO somos el fit correcto?
-                            </h4>
-                            <ul className="space-y-3">
-                                {noFit.map((item, i) => (
-                                    <li key={i} className="flex items-start gap-3 text-sm md:text-base opacity-80">
-                                        <span className="text-orange-500 font-bold">—</span>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                            <p className="mt-6 text-sm opacity-50 border-t border-black/10 pt-4">
-                                <SerifFont>Si tu startup calza con esto, probablemente no somos los indicados—pero te deseamos el mayor de los éxitos.</SerifFont>
-                            </p>
+                        <div className="mt-12 p-8 border-2 border-dashed bg-white/50" style={{ borderColor: `${colors.black}40` }}>
+                            <h4 className="font-bold mb-6 flex items-center gap-2 text-lg"><X size={24} className="text-red-500" /> ¿Cuándo NO somos el fit correcto?</h4>
+                            <ul className="space-y-3">{noFit.map((item, i) => (<li key={i} className="flex items-start gap-3 text-sm md:text-base opacity-80"><span className="text-orange-500 font-bold">—</span>{item}</li>))}</ul>
+                            <p className="mt-6 text-sm opacity-50 border-t border-black/10 pt-4"><SerifFont>Si tu startup calza con esto, probablemente no somos los indicados—pero te deseamos el mayor de los éxitos.</SerifFont></p>
                         </div>
                     </div>
                 </section>
@@ -793,53 +342,21 @@
         };
 
         const Footer = () => (
-            <footer 
-                className="pt-20 md:pt-32 pb-8 px-6 border-t-2"
-                style={{ backgroundColor: colors.orange, borderColor: colors.black }}
-            >
+            <footer className="pt-20 md:pt-32 pb-8 px-6 border-t-2" style={{ backgroundColor: colors.orange, borderColor: colors.black }}>
                 <div className="max-w-[90rem] mx-auto">
-                    {/* Main CTA */}
                     <div className="flex flex-col md:flex-row justify-between items-start gap-12 mb-20 md:mb-32">
                         <div>
-                            <h2 
-                                className="text-6xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter mb-8 leading-[0.8] break-words w-full"
-                                style={{ color: colors.white, fontFamily: 'Space Grotesk, sans-serif' }}
-                            >
-                                Let's <br/> Build.
-                            </h2>
-                            <BrutalButton 
-                                primary={false}
-                                onClick={() => document.getElementById('aplica').scrollIntoView({ behavior: 'smooth' })}
-                            >
-                                Aplicar Ahora
-                            </BrutalButton>
+                            <h2 className="text-6xl md:text-8xl lg:text-[10rem] font-black uppercase tracking-tighter mb-8 leading-[0.8] break-words w-full" style={{ color: colors.white, fontFamily: 'Space Grotesk, sans-serif' }}>Let's <br/> Build.</h2>
+                            <BrutalButton primary={false} onClick={() => document.getElementById('aplica').scrollIntoView({ behavior: 'smooth' })}>Aplicar Ahora</BrutalButton>
                         </div>
-                        
                         <div className="text-left md:text-right w-full md:w-auto text-white">
-                            <MonoFont className="text-sm uppercase tracking-wider opacity-80 block mb-2">
-                                Santiago, Chile
-                            </MonoFont>
-                            <SerifFont className="text-xl md:text-2xl opacity-90 block mb-8">
-                                "Capital con contexto.<br/>Compromiso con resultados."
-                            </SerifFont>
-                            <div 
-                                className="inline-block px-4 py-3 border-2"
-                                style={{ borderColor: colors.white, backgroundColor: 'rgba(255,255,255,0.1)' }}
-                            >
-                                <MonoFont className="text-xs font-bold">
-                                    SLA: Respondemos todos los pitches<br/>en máximo 2 semanas.
-                                </MonoFont>
-                            </div>
+                            <MonoFont className="text-sm uppercase tracking-wider opacity-80 block mb-2">Santiago, Chile</MonoFont>
+                            <SerifFont className="text-xl md:text-2xl opacity-90 block mb-8">"Capital con contexto.<br/>Compromiso con resultados."</SerifFont>
+                            <div className="inline-block px-4 py-3 border-2" style={{ borderColor: colors.white, backgroundColor: 'rgba(255,255,255,0.1)' }}><MonoFont className="text-xs font-bold">SLA: Respondemos todos los pitches<br/>en máximo 2 semanas.</MonoFont></div>
                         </div>
                     </div>
-                    
-                    {/* Bottom Bar */}
                     <div className="flex flex-col md:flex-row justify-between items-center border-t-2 pt-8 gap-4" style={{ borderColor: 'rgba(255,255,255,0.3)' }}>
-                        <div className="flex gap-3 items-center font-bold text-xs md:text-sm text-white">
-                            <div className="w-3 h-3 rounded-full bg-white animate-pulse"></div>
-                            <MonoFont>YOUNG VENTURES SpA © 2025</MonoFont>
-                        </div>
-                        
+                        <div className="flex gap-3 items-center font-bold text-xs md:text-sm text-white"><div className="w-3 h-3 rounded-full bg-white animate-pulse"></div><MonoFont>YOUNG VENTURES SpA © 2025</MonoFont></div>
                         <div className="flex gap-6">
                             <a href="#" className="text-white text-xs md:text-sm hover:underline font-mono uppercase">Linkedin</a>
                             <a href="#" className="text-white text-xs md:text-sm hover:underline font-mono uppercase">Twitter</a>
@@ -850,75 +367,31 @@
             </footer>
         );
 
-        // --- MAIN APP ---
         function YoungVenturesV3() {
             const [scrolled, setScrolled] = useState(false);
-
             useEffect(() => {
-                const handleScroll = () => {
-                    setScrolled(window.scrollY > 200);
-                };
+                const handleScroll = () => setScrolled(window.scrollY > 200);
                 window.addEventListener('scroll', handleScroll);
                 return () => window.removeEventListener('scroll', handleScroll);
             }, []);
-
-            const marqueeItems = [
-                "11 profesionales. Un estándar.",
-                "B2B software. Nada más.",
-                "Tu primer cheque inteligente.",
-                "LatAm con estándares globales.",
-                "Crea entorno a una red, networth=network",
-            ];
+            const marqueeItems = ["11 profesionales. Un estándar.", "B2B software. Nada más.", "Tu primer cheque inteligente.", "LatAm con estándares globales.", "Crea entorno a una red, networth=network"];
 
             return (
                 <div style={{ backgroundColor: colors.bone, fontFamily: 'Space Grotesk, sans-serif' }} className="selection:bg-orange-500 selection:text-white overflow-x-hidden">
                     <TopNavigation />
-
-                    {/* Floating Nav (Appears on scroll) */}
-                    <nav 
-                        className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[90%] md:w-auto max-w-md ${
-                            scrolled ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'
-                        }`}
-                    >
-                        <div 
-                            className="px-4 py-3 rounded-full flex items-center justify-between md:justify-start gap-4 border-2"
-                            style={{ 
-                                backgroundColor: colors.black, 
-                                color: colors.bone, 
-                                borderColor: colors.white,
-                                boxShadow: '0px 10px 20px rgba(0,0,0,0.4)',
-                            }}
-                        >
-                            <div 
-                                className="rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs shrink-0"
-                                style={{ backgroundColor: colors.bone, color: colors.black }}
-                            >
-                                YV
-                            </div>
+                    <nav className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 w-[90%] md:w-auto max-w-md ${scrolled ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'}`}>
+                        <div className="px-4 py-3 rounded-full flex items-center justify-between md:justify-start gap-4 border-2" style={{ backgroundColor: colors.black, color: colors.bone, borderColor: colors.white, boxShadow: '0px 10px 20px rgba(0,0,0,0.4)' }}>
+                            <div className="rounded-full w-8 h-8 flex items-center justify-center font-bold text-xs shrink-0" style={{ backgroundColor: colors.bone, color: colors.black }}>YV</div>
                             <div className="hidden md:flex items-center px-4 gap-6">
-                                <a href="#manifiesto" className="hover:text-orange-500 transition-colors">
-                                    <MonoFont className="text-xs uppercase font-bold">Manifiesto</MonoFont>
-                                </a>
-                                <a href="#tesis" className="hover:text-orange-500 transition-colors">
-                                    <MonoFont className="text-xs uppercase font-bold">Tesis</MonoFont>
-                                </a>
-                                <a href="#socios" className="hover:text-orange-500 transition-colors">
-                                    <MonoFont className="text-xs uppercase font-bold">Socios</MonoFont>
-                                </a>
+                                <a href="#manifiesto" className="hover:text-orange-500 transition-colors"><MonoFont className="text-xs uppercase font-bold">Manifiesto</MonoFont></a>
+                                <a href="#tesis" className="hover:text-orange-500 transition-colors"><MonoFont className="text-xs uppercase font-bold">Tesis</MonoFont></a>
+                                <a href="#socios" className="hover:text-orange-500 transition-colors"><MonoFont className="text-xs uppercase font-bold">Socios</MonoFont></a>
                             </div>
-                            <button 
-                                className="px-5 py-2 rounded-full font-bold text-xs md:text-sm hover:bg-white transition-colors shrink-0 whitespace-nowrap"
-                                style={{ backgroundColor: colors.orange, color: colors.white }}
-                                onClick={() => document.getElementById('aplica').scrollIntoView({ behavior: 'smooth' })}
-                            >
-                                ENVIAR PITCH
-                            </button>
+                            <button className="px-5 py-2 rounded-full font-bold text-xs md:text-sm hover:bg-white transition-colors shrink-0 whitespace-nowrap" style={{ backgroundColor: colors.orange, color: colors.white }} onClick={() => document.getElementById('aplica').scrollIntoView({ behavior: 'smooth' })}>ENVIAR PITCH</button>
                         </div>
                     </nav>
-
-                    {/* Sections */}
                     <Hero />
-                    <Marquee items={marqueeItems} speed="35s" />
+                    <Marquee items={marqueeItems} />
                     <ManifiestoSection />
                     <TesisSection />
                     <DiferenciadoresSection />
@@ -929,7 +402,7 @@
             );
         }
 
-        const root = createRoot(document.getElementById('root'));
+        const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<YoungVenturesV3 />);
     </script>
 </body>
