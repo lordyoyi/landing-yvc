@@ -1,0 +1,33 @@
+{
+  "name": "landing-yvc",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "sync": "astro sync",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/markdoc": "latest",
+    "@astrojs/node": "latest",
+    "@astrojs/react": "latest",
+    "@astrojs/rss": "latest",
+    "@astrojs/sitemap": "latest",
+    "@keystatic/astro": "latest",
+    "@keystatic/core": "latest",
+    "@tailwindcss/vite": "latest",
+    "astro": "latest",
+    "lucide-react": "latest",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "latest"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1"
+  }
+}

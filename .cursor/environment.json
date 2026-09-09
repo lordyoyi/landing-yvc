@@ -1,17 +1,17 @@
 {
   "name": "landing-yvc",
-  "install": "python3 --version",
+  "install": "npm install",
   "terminals": [
     {
-      "name": "web",
-      "command": "python3 -m http.server 8000 --bind 0.0.0.0",
-      "description": "Serves the static landing page (index.html) at http://localhost:8000"
+      "name": "dev",
+      "command": "npm run dev -- --host 0.0.0.0",
+      "description": "Astro dev server: landing at http://localhost:4321/, blog at /blog, Keystatic admin at /keystatic"
     }
   ],
   "ports": [
     {
-      "name": "web server",
-      "port": 8000
+      "name": "astro dev server",
+      "port": 4321
     }
   ]
 }
