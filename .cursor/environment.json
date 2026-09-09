@@ -1,0 +1,17 @@
+{
+  "name": "landing-yvc",
+  "install": "npm install",
+  "terminals": [
+    {
+      "name": "dev",
+      "command": "npm run dev -- --host 0.0.0.0",
+      "description": "Astro dev server: landing at http://localhost:4321/, blog at /blog, Keystatic admin at /keystatic"
+    }
+  ],
+  "ports": [
+    {
+      "name": "astro dev server",
+      "port": 4321
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateFmt = new Intl.DateTimeFormat('es-CL', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Layout
+  title={`${post.data.title} | Young Ventures`}
+  description={post.data.description}
+  image={post.data.cover ?? '/og-default.png'}
+  type="article"
+>
+  <main class="min-h-screen" style="background-color: #F2F0E9;">
+    <!-- Nav -->
+    <nav class="border-b-2 border-black px-6 py-6">
+      <div class="max-w-[48rem] mx-auto flex justify-between items-center">
+        <a
+          href="/"
+          class="font-black text-lg tracking-tight uppercase hover:text-orange-600 transition-colors"
+          style="font-family: 'Space Grotesk', sans-serif;">Young Ventures</a
+        >
+        <a href="/blog" class="font-bold text-sm uppercase hover:text-orange-600 transition-colors">← Blog</a>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <article class="px-6 py-12 md:py-20">
+      <div class="max-w-[48rem] mx-auto">
+        <div class="flex flex-wrap gap-2 mb-6">
+          {
+            post.data.tags.map((tag) => (
+              <span
+                class="text-[10px] uppercase tracking-widest font-bold px-2 py-1 border border-black"
+                style="background-color:#fff;"
+              >
+                {tag}
+              </span>
+            ))
+          }
+        </div>
+        <h1
+          class="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-[0.9] mb-6"
+          style="font-family: 'Space Grotesk', sans-serif;"
+        >
+          {post.data.title}
+        </h1>
+        <div
+          class="flex items-center gap-4 text-sm uppercase tracking-wider opacity-70 mb-10 pb-8 border-b-2 border-black/10"
+          style="font-family: 'Courier New', monospace;"
+        >
+          <span>{post.data.author}</span>
+          <span>•</span>
+          <span>{dateFmt.format(post.data.publishDate)}</span>
+        </div>
+
+        {
+          post.data.cover && (
+            <img
+              src={post.data.cover}
+              alt={post.data.title}
+              class="w-full border-2 border-black mb-12"
+              style="box-shadow: 8px 8px 0px 0px #000;"
+            />
+          )
+        }
+
+        <div class="yv-prose">
+          <Content />
+        </div>
+
+        <div class="mt-16 pt-8 border-t-2 border-black flex justify-between items-center">
+          <a href="/blog" class="font-bold text-sm uppercase hover:text-orange-600 transition-colors"
+            >← Todos los posts</a
+          >
+          <a
+            href="/#aplica"
+            class="px-6 py-3 font-bold text-sm uppercase border-2 border-black text-white transition-all hover:-translate-y-[2px]"
+            style="background-color:#FF6A00; box-shadow: 4px 4px 0px 0px #000;">Enviar Pitch</a
+          >
+        </div>
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style is:global>
+  .yv-prose {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: #1a1a1a;
+  }
+  .yv-prose h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 2rem;
+    line-height: 1.1;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .yv-prose h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .yv-prose p {
+    margin-bottom: 1.25rem;
+  }
+  .yv-prose a {
+    color: #3333ff;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  .yv-prose ul,
+  .yv-prose ol {
+    margin: 1.25rem 0;
+    padding-left: 1.5rem;
+  }
+  .yv-prose li {
+    margin-bottom: 0.5rem;
+  }
+  .yv-prose ul {
+    list-style: square;
+  }
+  .yv-prose ol {
+    list-style: decimal;
+  }
+  .yv-prose blockquote {
+    border-left: 6px solid #ff6a00;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    margin: 1.75rem 0;
+    font-style: italic;
+    font-size: 1.3rem;
+  }
+  .yv-prose img {
+    border: 2px solid #000;
+    margin: 2rem 0;
+    max-width: 100%;
+    height: auto;
+  }
+  .yv-prose code {
+    background-color: #000;
+    color: #ff6a00;
+    padding: 0.15rem 0.4rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+  }
+  .yv-prose pre {
+    background-color: #000;
+    color: #f2f0e9;
+    padding: 1.25rem;
+    overflow-x: auto;
+    margin: 1.75rem 0;
+    border: 2px solid #000;
+  }
+  .yv-prose pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+  }
+  .yv-prose strong {
+    font-weight: 700;
+  }
+  .yv-prose hr {
+    border: none;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    margin: 2.5rem 0;
+  }
+</style>
